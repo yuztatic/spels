@@ -1,0 +1,121 @@
+php.ini
+- extension=intl
+- extension=zip
+
+httpd.conf
+-Rewrite_module modules/mod_rewrite.so
+
+go to htdocs directory in cmd
+install codeigniter famework
+-composer create-project codeigniter4/appstarter spels
+
+visual studio code
+open project in vs code
+go to directory spels
+code .
+
+vs code extensions
+PHP Debug
+PHP Intelephense
+PHP Extension Pack
+PHP IntelliSense
+
+HTML Boilerplate
+HTML CSS Support
+
+Database Client- Weijan Chen
+
+Thunder Client
+
+Bootstrap 4 5, FOnt awesome 4, Font Awesome 5
+
+icons for vs code
+
+---------------
+
+rename env file to .env
+
+# CI_ENVIRONMENT = production to # CI_ENVIRONMENT = development
+then remove #
+
+app.baseURL = 'http://localhost/spels'
+
+next in public folder htaccess and index.php drag to outside directory with env file
+
+or php spark serve --port 8000 --host 0.0.0.0
+app.baseURL = 'http://localhost:8000'
+
+
+
+in index.php remove ../
+require FCPATH . '../app/Config/Paths.php'; to require FCPATH . 'app/Config/Paths.php';
+
+
+
+----------------
+php spark list
+php spark make:controller --help
+
+php spark make:controller OfficeController --restful
+
+
+---------------------
+install git
+git bash
+
+commands
+
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/yuztatic/laravel.git
+git push -u origin main
+
+------------------------------------
+
+data base config
+
+database.default.hostname = localhost
+database.default.database = spels
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
+
+
+
+ git commit -am "added db connection"
+git push origin main
+
+---------------------
+
+create connection in database extension
+name : MYSQL LOCAL
+host: localhost
+username: root
+port: as is
+password: ""
+
+then click connect.
+wag save.
+
+
+filldb.info
+generate
+import to vscode
+
+-------------------
+
+try builder code in home controller
+	auto generated ito by codeium
+
+       $db= \Config\Database::connect();
+       $builder = $db->table('authors');
+       $query = $builder->get();
+       $result = $query->getResult();
+       return json_encode($result);
+
+
+then install json viewer
