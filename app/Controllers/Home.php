@@ -6,6 +6,11 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('welcome_message');
+       $db= \Config\Database::connect();
+       $builder = $db->table('authors');
+       $query = $builder->get();
+       $result = $query->getResult();
+       return json_encode($result);
+
     }
 }
