@@ -9,41 +9,48 @@ class OfficeTable extends Migration
     public function up()
     {
         $fields = [
-            
-        'name' => [
-            'type' => 'VARCHAR',
-            'constraint' => 255,
-            'null' => false,
-        ],
-        'code' => [
-            'type' => 'VARCHAR',
-            'constraint' => 255,
-            'null' => false,
+            'id' => [
+                'type' => 'INT', // INT(11)
+                'constraint' => 11,
+                'unsigned' => true,
+                'auto_increment' => true,
+            ],
+            'code' => [
+                'type' => 'VARCHAR', // VARCHAR(255)
+                'constraint' => 255,
+                'null' => false,
+            ],
+            'name' => [
+                'type' => 'VARCHAR', // VARCHAR(255)
+                'constraint' => 255,
+                'null' => false,
+            ],
+            'email' => [
+                'type' => 'VARCHAR', // VARCHAR(255)
+                'constraint' => 255,
+                'null' => false,
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => false,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => false,
+            ]
+                
 
-        ],
-        'email' => [
-            'type' => 'VARCHAR',
-            'constraint' => 255,
-            'null' => false,
-        ],
-        'created_at' => [
-            'type' => 'TIMESTAMP',
-            'null' => false,
-        ],
-        'updated_at' => [
-            'type' => 'TIMESTAMP',
-            'null' => true,
-        ]
+
         ];
-
+          
         $this->forge->addField($fields);
-        $this->forge->addPrimaryKey('id', true);
-        $this->forge->createTable('offices');
+        $this->forge->addPrimaryKey('id');
+        $this->forge->createTable('OfficeTable');
         //
     }
 
     public function down()
     {
-        $this->forge->dropTable('offices');
+        $this->forge->dropTable('OfficeTable');
     }
 }

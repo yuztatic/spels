@@ -279,3 +279,80 @@ $db = \Config\Database::connect();
         // return json_encode($result);
         
 -------------------------------
+
+
+_________________________________
+create model
+
+php spark make:model Office
+
+set fields
+ protected $allowedFields    = [
+        'code',
+        'name',
+        'email '
+    ];
+
+set validation
+
+    // Validation
+    protected $validationRules      = [
+        'code' => 'required|min_length[3]|max_length[255]',
+        'name' => 'required|min_length[3]|max_length[255]',
+        'email' => 'required|valid_email|min_length[3]|max_length[255]'
+    ];
+
+
+create the migration
+
+php spark make:migration OfficeTable
+
+set up and down function
+
+  public function up()
+    {
+        $fields = [
+            
+        'name' => [
+            'type' => 'VARCHAR',
+            'constraint' => 255,
+            'null' => false,
+        ],
+        'code' => [
+            'type' => 'VARCHAR',
+            'constraint' => 255,
+            'null' => false,
+
+        ],
+        'email' => [
+            'type' => 'VARCHAR',
+            'constraint' => 255,
+            'null' => false,
+        ],
+        'created_at' => [
+            'type' => 'TIMESTAMP',
+            'null' => false,
+        ],
+        'updated_at' => [
+            'type' => 'TIMESTAMP',
+            'null' => true,
+        ]
+        ];
+
+        $this->forge->addField($fields);
+        $this->forge->addPrimaryKey('id', true);
+        $this->forge->createTable('offices');
+        //
+    }
+
+    public function down()
+    {
+        $this->forge->dropTable('offices');
+    }
+
+
+
+    after that run migration
+
+    php spark migrate
+_________________________________
