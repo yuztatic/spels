@@ -407,3 +407,40 @@ php spark make:seeder OfficeSeeder
 
     php spark db:seed OfficeSeeder
 ----------------------------------
+_________________________________
+user authentication
+login 
+
+codeigniter shield
+passportjs.org
+jwt
+
+composer config minimum-stability dev
+
+composer require codeigniter4/shield:dev-develop
+
+php spark shield:setup
+
+
+  Created: APPPATH\Config/Auth.php
+  Created: APPPATH\Config/AuthGroups.php
+  Created: APPPATH\Config/AuthToken.php
+  Updated: APPPATH\Config\Autoload.php
+  Updated: APPPATH\Config\Routes.php
+  Updated: We have updated file 'APPPATH\Config\Security.php' for security reasons.
+  The required Config\Email::$fromEmail is not set. Do you set now? [y, n]: y
+  What is your email? : juliusmanipol@gmail.com
+  The required Config\Email::$fromName is not set. Do you set now? [y, n]: y
+  What is your name? : julius manipol
+  Updated: APPPATH\Config\Email.php
+  Run `spark migrate --all` now? [y, n]: y
+Running all new migrations...
+        Running: (CodeIgniter\Shield) 2020-12-28-223112_CodeIgniter\Shield\Database\Migrations\CreateAuthTables
+        Running: (CodeIgniter\Settings) 2021-07-04-041948_CodeIgniter\Settings\Database\Migrations\CreateSettingsTable      
+        Running: (CodeIgniter\Settings) 2021-11-14-143905_CodeIgniter\Settings\Database\Migrations\AddContextColumn
+Migrations complete.
+
+
+
+
+_________________________________
