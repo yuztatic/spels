@@ -72,6 +72,14 @@ git branch -M main
 git remote add origin https://github.com/yuztatic/laravel.git
 git push -u origin main
 
+
+
+if all files
+git add -f .
+The -f flag stands for "force" and it tells Git to add the files even if they are ignored.
+git commit -m "Committing all files, including ignored ones"
+git push origin master
+
 ------------------------------------
 
 data base config
