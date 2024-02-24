@@ -452,3 +452,58 @@ Migrations complete.
 
 
 _________________________________
+
+
+
+ticket
+make ng controller
+then make model
+in model lagyan yung fields
+
+    protected $allowedFields    = [
+
+        'first_name',
+        'last_name',
+        'email',
+        'office_id',
+        'state',
+        'severity',
+        'description',
+        'remarks'
+    ];
+
+    tapos enable TIMESTAMP
+      // Dates
+    protected $useTimestamps = true;
+
+    tapos validation validationRules
+        // Validation
+    protected $validationRules      = [
+
+        'first_name' => 'required|min_length[3]|max_length[255]',
+        'last_name' => 'required|min_length[3]|max_length[255]',
+        'email' => 'required|valid_email|min_length[3]|max_length[255]',
+        'office_id' => 'required',
+        'state' => 'required',
+        'severity' => 'required',
+        'description' => 'required',
+        'remarks' => 'required' 
+    ];
+
+
+    tapos make migration
+    unang una gagawa ng fields
+
+    after set ng fields call forge class
+
+        $this->forge->addField($fields);
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addFOreignKey('office_id', 'officetable', 'id', 'CASCADE', 'CASCADE');
+         papunta sa offices table, tapos on update on delete cascade
+
+        then sa down dropt table  
+         public function down()
+    {
+        $this->forge->dropTable('tickettable');
+    }
+}
