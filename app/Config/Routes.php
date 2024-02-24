@@ -15,6 +15,6 @@ $routes->set404Override();
 
 $routes->get('/', 'Home::index');
 
-$routes->resource('offices',['controller' => 'OfficeController']);
+$routes->resource('offices',['controller' => 'OfficeController', 'except' => 'new, edit']);
 
 service('auth')->routes($routes);
