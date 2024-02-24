@@ -1,0 +1,50 @@
+download admin lte
+open zip file
+extract then open folder
+chartjs.org
+
+
+after extracting
+copy dist and plugins to public folder
+
+create dashboard
+
+php spark make:controller dashboardController
+
+then under views folder create another folder templates
+create admin_template.php
+
+next create ng route - ipoint yung contrller sa view
+-----------------------------------------------------
+ $routes->setDefaultnamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+
+
+$routes->get('/', 'Home::index');
+
+$route->get('dashboard','Dashboard::index');
+
+$routes->resource('offices',['controller' => 'OfficeController', 'except' => 'new, edit', 'filter' => 'auth']);
+$routes->resource('tickets',['controller' => 'TicketController', 'except' => 'new, edit']);
+
+service('auth')->routes($routes);
+----------------------------------------
+
+
+return view from dashboard controller index method 
+
+class DashboardController extends BaseController
+{
+    public function index()
+    {
+        return view('templates/admin_template.php');
+    }
+}
+
+---------------------------------------------
+copy code from admin lte index
+replace ctrl shift l all href plugins and dist
+="<?=base_url()?>public/dist
