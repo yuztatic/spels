@@ -48,3 +48,9 @@ class DashboardController extends BaseController
 copy code from admin lte index
 replace ctrl shift l all href plugins and dist
 ="<?=base_url()?>public/dist
+
+----------------
+
+next chop chop yung admin template
+
+header.php, menu.php, footer.php, scripts.php
