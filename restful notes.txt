@@ -28,3 +28,37 @@ service('auth')->routes($routes);
 
 crud na tayo
 sa controller dapat extends resource controller hindi base controller
+
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\http\Response;
+
+
+public function create()
+    {
+        $officeModel= new \App\Models\Office();
+        $data=$this->request->getPost();// eto yung lahat ng data galing sa client
+
+        //trap
+        if(!$officeModel->validate($data)){ //if not true false, meaning may error return response to user
+                $response= array(
+                    'status'=>'error',
+                    'message'=>$officeModel->errors()
+                );
+
+                return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response);
+                //return agad if may error
+
+        }
+        $officeModel->insert($data);
+        $response= array(
+            'status'=>'success',
+            'message'=>'Office created successfully'
+        );
+
+        return $this->response->setStatusCode(Response::HTTP_CREATED)->setJSON($response);
+        //IF WALA ERROR SAVE NANG DATA
+
+
+if ok na test sa thunderclient
+    }

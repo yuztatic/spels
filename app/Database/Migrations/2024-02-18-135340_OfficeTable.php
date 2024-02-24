@@ -45,12 +45,12 @@ class OfficeTable extends Migration
           
         $this->forge->addField($fields);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('OfficeTable');
+        $this->forge->createTable('offices');
         //
     }
 
     public function down()
     {
-        $this->forge->dropTable('OfficeTable');
+        $this->forge->dropTable('offices');
     }
 }

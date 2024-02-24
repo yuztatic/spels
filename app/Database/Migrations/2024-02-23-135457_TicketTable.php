@@ -67,13 +67,13 @@ class TicketTable extends Migration
 
         $this->forge->addField($fields);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addFOreignKey('office_id', 'officetable', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('tickettable');
+        $this->forge->addFOreignKey('office_id', 'offices', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('tickets');
         //
     }
 
     public function down()
     {
-        $this->forge->dropTable('tickettable');
+        $this->forge->dropTable('tickets');
     }
 }
