@@ -1,2 +1,23 @@
 REST API REPRESENTATIONAL STATE TRANSFER APPLICATION PROGRAMMING PROGRAMMING INTERFACE
 END POINT
+
+mas pinasimple ng code igniter
+isang route lang
+
+to see is to believe
+
+app\config\routes.php
+
+ $routes->setDefaultnamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+
+
+$routes->get('/', 'Home::index');
+
+$routes->resource('offices',['controller' => 'OfficeController']);
+//create new resource route
+
+service('auth')->routes($routes);
