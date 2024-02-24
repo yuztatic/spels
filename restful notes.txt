@@ -160,3 +160,7 @@ parang sa toast
 ---------------------------------
 pag dating sa TicketController
 copy pase lahat ng nasa office controller
+
+
+ctrl shift l - for multiple line editing
+to change all instance ng code from officeModel to ticketModel
