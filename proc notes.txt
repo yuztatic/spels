@@ -1,0 +1,13 @@
+create controller
+create Models
+set fields, validation
+create migration
+set up and down function
+run migration
+create codes in controller
+test codes in thunder client
+
+secure route auths
+make filter
+add filter to config file\filter
+go to config routes then add filter to resource

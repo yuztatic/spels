@@ -1,0 +1,45 @@
+php spark list
+
+php spark make:filter
+app\filter\auth
+
+   public function before(RequestInterface $request, $arguments = null)
+    {
+        helper('auth');
+        if(!auth()->loggedIn()){
+            return redirect()->to(base_url('login'));
+            
+        }
+        //
+    }
+
+
+    then add filter to config file
+    app\config\filter
+
+      public array $aliases = [
+        'csrf'          => CSRF::class,
+        'toolbar'       => DebugToolbar::class,
+        'honeypot'      => Honeypot::class,
+        'invalidchars'  => InvalidChars::class,
+        'secureheaders' => SecureHeaders::class,
+        'auth'          =>\App\Filters\Auth::class
+    ];
+
+
+go to config\routes
+
+$routes->setDefaultnamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+
+
+$routes->get('/', 'Home::index');
+
+//add filter sa resource
+$routes->resource('offices',['controller' => 'OfficeController', 'except' => 'new, edit', 'filter' => 'auth']);
+$routes->resource('tickets',['controller' => 'TicketController', 'except' => 'new, edit']);
+
+service('auth')->routes($routes);
