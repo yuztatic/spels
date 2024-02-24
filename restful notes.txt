@@ -17,7 +17,14 @@ $routes->set404Override();
 
 $routes->get('/', 'Home::index');
 
-$routes->resource('offices',['controller' => 'OfficeController']);
-//create new resource route
+$routes->resource('offices',['controller' => 'OfficeController', 'except' => 'new, edit']);
+$routes->resource('tickets',['controller' => 'TicketController', 'except' => 'new, edit']);
+
+
+//create new resource route except new and edit
 
 service('auth')->routes($routes);
+
+
+crud na tayo
+sa controller dapat extends resource controller hindi base controller
