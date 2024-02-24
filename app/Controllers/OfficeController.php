@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
-use CodeIgniter\http\Response;
+use CodeIgniter\HTTP\Response;
 
 class OfficeController extends ResourceController
 {
@@ -100,7 +100,30 @@ class OfficeController extends ResourceController
      */
     public function update($id = null)
     {
-        //
+         
+        $officeModel= new \App\Models\Office();
+        $data=$this->request->getJSON();// in preparation para sa ui
+
+        //trap
+        if(!$officeModel->validate($data)){ //if not true false, meaning may error return response to user
+                $response= array(
+                    'status'=>'error',
+                    'message'=>$officeModel->errors()
+                );
+
+                return $this->response->setStatusCode(Response::HTTP_NOT_MODIFIED)->setJSON($response);
+                //return agad if may error
+
+        }
+        $officeModel->update($id, $data); // parameter is id and data
+        $response= array(
+            'status'=>'success',
+            'message'=>'Office updated successfully'
+        );
+
+        return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response); // RESPONSE 200
+        //IF WALA ERROR SAVE NANG DATA
+
     }
 
     /**

@@ -83,3 +83,39 @@ if ok na test sa thunderclient
 
         return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($data);
     }
+____________________________________
+
+UPDATE NAMAN TAYO UPDATE. MADALI LANG YUNG UPDATE
+kopyahin natin yung create
+
+INTRO ENABLE CORS PARA MAACCESS NG IBANG CLIENT ANG SERVER
+php spark serve --port 8000 --host 0.0.0.0
+
+
+ public function update($id = null)
+    {
+         
+        $officeModel= new \App\Models\Office();
+        $data=$this->request->getJSON();// in preparation para sa ui
+
+        //trap
+        if(!$officeModel->validate($data)){ //if not true false, meaning may error return response to user
+                $response= array(
+                    'status'=>'error',
+                    'message'=>$officeModel->errors()
+                );
+
+                return $this->response->setStatusCode(Response::HTTP_NOT_MODIFIED)->setJSON($response);
+                //return agad if may error
+
+        }
+        $officeModel->update($id, $data); // parameter is id and data
+        $response= array(
+            'status'=>'success',
+            'message'=>'Office updated successfully'
+        );
+
+        return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response); // RESPONSE 200
+        //IF WALA ERROR SAVE NANG DATA
+
+    }
