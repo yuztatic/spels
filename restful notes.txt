@@ -105,7 +105,7 @@ php spark serve --port 8000 --host 0.0.0.0
                     'message'=>$officeModel->errors()
                 );
 
-                return $this->response->setStatusCode(Response::HTTP_NOT_MODIFIED)->setJSON($response);
+                return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response);
                 //return agad if may error
 
         }
@@ -119,3 +119,44 @@ php spark serve --port 8000 --host 0.0.0.0
         //IF WALA ERROR SAVE NANG DATA
 
     }
+    ____________________________________
+
+    LASTLY YUNG DELETE NA function
+    KOPYAHIN LANG YUNG UPDATE PATTERN LANG
+
+     public function delete($id = null)
+    {
+        $officeModel= new \App\Models\Office();
+        $data=$officeModel->find($id);
+
+        //trap
+        if($data){ 
+           $officeModel->delete($id);//delete if exist
+            $response= array(
+                    'status'=>'success',
+                    'message'=>'Office deleted successfully'
+                );
+
+                return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response);
+
+
+        }
+        
+        $response= array(
+            'status'=>'error',
+            'message'=>'Record Not found'
+        );
+
+        return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response); // RESPONSE 200
+        //IF WALA ERROR SAVE NANG DATA
+
+    }
+}
+
+
+status response para hindi na ihandle individually 
+parang sa toast
+
+---------------------------------
+pag dating sa TicketController
+copy pase lahat ng nasa office controller

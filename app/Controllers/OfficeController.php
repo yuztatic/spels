@@ -104,14 +104,15 @@ class OfficeController extends ResourceController
         $officeModel= new \App\Models\Office();
         $data=$this->request->getJSON();// in preparation para sa ui
 
-        //trap
-        if(!$officeModel->validate($data)){ //if not true false, meaning may error return response to user
+       $datafind= $officeModel->find($id);
+        
+        if(!$officeModel->validate($data) || !$datafind){ //if not true false, meaning may error return response to user
                 $response= array(
                     'status'=>'error',
                     'message'=>$officeModel->errors()
                 );
 
-                return $this->response->setStatusCode(Response::HTTP_NOT_MODIFIED)->setJSON($response);
+                return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response);
                 //return agad if may error
 
         }
@@ -133,6 +134,29 @@ class OfficeController extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $officeModel= new \App\Models\Office();
+        $data=$officeModel->find($id);
+
+        //trap
+        if($data){ 
+           $officeModel->delete($id);//delete if exist
+            $response= array(
+                    'status'=>'success',
+                    'message'=>'Office deleted successfully'
+                );
+
+                return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response);
+
+
+        }
+        
+        $response= array(
+            'status'=>'error',
+            'message'=>'Record Not found'
+        );
+
+        return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response); // RESPONSE 200
+        //IF WALA ERROR SAVE NANG DATA
+
     }
 }
