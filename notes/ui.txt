@@ -62,3 +62,30 @@ update icons
 create pages folder in views
 
 update controller index views
+return view('pages/offices.php')
+
+----------------------------
+
+extend natin admin template sa pages
+
+then gawa ng section na content area
+
+
+<?= $this->extend('templates/admin_template') ; ?>
+
+<?= $this->section('contentarea'); ?>
+
+<h1> Tickets Page</h1>
+
+<?= $this->endSection(); ?>
+
+
+
+
+ang content area yung content wrapper
+
+tapos render yung section na content areav
+
+<div class="content-wrapper">
+  <?= $this->renderSection('contentarea'); ?>
+</div>
