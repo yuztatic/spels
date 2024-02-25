@@ -84,8 +84,10 @@ then gawa ng section na content area
 
 ang content area yung content wrapper
 
-tapos render yung section na content areav
+tapos render yung section na content area
 
 <div class="content-wrapper">
   <?= $this->renderSection('contentarea'); ?>
 </div>
+
+
