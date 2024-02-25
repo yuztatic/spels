@@ -56,3 +56,9 @@ next chop chop yung admin template
 header.php, menu.php, footer.php, scripts.php
 
 fas - font awseome na website
+
+clean menu
+update icons
+create pages folder in views
+
+update controller index views

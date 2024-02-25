@@ -15,7 +15,7 @@ class OfficeController extends ResourceController
      */
     public function index()
     {
-        //
+        return view('pages/offices.php');
     }
 
     /**

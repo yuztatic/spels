@@ -9,6 +9,7 @@ class DashboardController extends BaseController
 {
     public function index()
     {
-        return view('templates/admin_template.php');
+        // return view('templates/admin_template.php');
+        return view ('pages/dashboard.php');
     }
 }

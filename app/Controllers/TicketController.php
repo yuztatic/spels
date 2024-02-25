@@ -15,7 +15,7 @@ class TicketController extends ResourceController
      */
     public function index()
     {
-        //
+        return(view('pages/tickets.php'));
     }
 
     /**
