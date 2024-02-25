@@ -54,3 +54,5 @@ replace ctrl shift l all href plugins and dist
 next chop chop yung admin template
 
 header.php, menu.php, footer.php, scripts.php
+
+fas - font awseome na website
