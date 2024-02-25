@@ -13,7 +13,8 @@ $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 
 
-$routes->get('/', 'Home::index');
+$routes->get('/', 'DashboardController::index');
+//route to be displayed when root diretory is accessed
 
 $routes->get('dashboard','DashboardController::index');
 
