@@ -2,6 +2,7 @@
 
 <?= $this->section('contentarea'); ?>
 
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -17,6 +18,13 @@
 
 <section class="content">
     <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-primary btn-sm btn-add" data-toggle="modal" data-target="#modalID">Add Office</button>
+            </div>
+
+
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -55,31 +63,32 @@
         lengthMenu: [5, 10, 20, 50],
         searching: true,
         ordering: true,
+        autoWidth:false,
         ajax: {
             url: "<?= base_url('offices/list'); ?>",
             type: "POST" //post po na verb hindi po get
         },
         columns: [{
-            data: "id",
-        }, {
-            data: "code",
-        },{
-            data: "name",
-        },{
-            data: "email",
-        },{
-            data: "",
-                defaultContent:`
+                data: "id",
+            }, {
+                data: "code",
+            }, {
+                data: "name",
+            }, {
+                data: "email",
+            }, {
+                data: "",
+                defaultContent: `
                 <td>
                 <button type="button" class="btn btn-primary btn-sm btn-edit" id="editBtn" >Edit</button>
                 <button type="button" class="btn btn-danger btn-sm btn-delete" id="deleteBtn" >Delete</button>
                 </td>
                 `,
-        }
-    
-    
-    
-    
+            }
+
+
+
+
         ]
 
     });
