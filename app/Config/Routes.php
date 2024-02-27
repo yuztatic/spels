@@ -17,6 +17,8 @@ $routes->get('/', 'DashboardController::index');
 //route to be displayed when root diretory is accessed
 
 $routes->get('dashboard','DashboardController::index');
+$routes->post('offices/list','OfficeController::list');
+$routes->get('tickets/list','TicketController::list');
 
 $routes->resource('offices',['controller' => 'OfficeController', 'except' => 'new, edit', 'filter' => 'auth']);
 $routes->resource('tickets',['controller' => 'TicketController', 'except' => 'new, edit']);

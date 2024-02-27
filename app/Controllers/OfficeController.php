@@ -25,20 +25,66 @@ class OfficeController extends ResourceController
      */
     public function show($id = null)
     {
-        $officeModel= new \App\Models\Office();
-        $data=$officeModel->find($id);
+        $officeModel = new \App\Models\Office();
+        $data = $officeModel->find($id);
 
-        if(!$data){
-                $response= array(
-                    'status'=>'error',
-                    'message'=>'Office not found'
-                );
-                // return $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
-                return $this->response->setStatusCode(Response::HTTP_NOT_FOUND)->setJSON($response);
-
+        if (!$data) {
+            $response = array(
+                'status' => 'error',
+                'message' => 'Office not found'
+            );
+            // return $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
+            return $this->response->setStatusCode(Response::HTTP_NOT_FOUND)->setJSON($response);
         }
 
         return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($data);
+    }
+
+    public function list()
+    {
+        $officeModel = new \App\Models\Office();
+        $postData = $this->request->getPost();
+
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length'];
+        $searchValue = $postData['search']['value'];
+        $sortby = $postData['order'][0]['column'];
+        $sortdirection = $postData['order'][0]['dir'];
+        $sortcolumn = $postData['columns'][$sortby]['data'];
+
+        $totalRecords = $officeModel->select('id')->countAllResults();
+        $totalRecordsWithFilter = $officeModel->select('id')->like('code', $searchValue)
+            ->orlike('name', $searchValue)->orlike('email', $searchValue)
+            ->orderBY($sortcolumn, $sortdirection)->countAllResults();
+
+        //fetch records
+        $records = $officeModel->select('*')->like('code', $searchValue)
+            ->orlike('name', $searchValue)->orlike('email', $searchValue)
+            ->orderBY($sortcolumn, $sortdirection)->findAll($rowperpage, $start);
+
+        //map data na ibabalik sa table
+        $data = array();
+
+        foreach ($records as $record) {
+            $data[] = array(
+                "id" => $record['id'],
+                "code" => $record['code'],
+                "name" => $record['name'],
+                "email" => $record['email']
+
+            );
+        }
+
+        $response=array( 
+                    "draw"=>intval($draw),
+                    "recordsTotal"=>$totalRecords,
+                    "recordsFiltered"=>$totalRecordsWithFilter,
+                    "data"=>$data 
+        );
+
+           return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response); 
+
     }
 
     /**
@@ -58,24 +104,24 @@ class OfficeController extends ResourceController
      */
     public function create()
     {
-        $officeModel= new \App\Models\Office();
-        $data=$this->request->getPost();// eto yung lahat ng data galing sa client
+        $officeModel = new \App\Models\Office();
+        $data = $this->request->getPost(); // eto yung lahat ng data galing sa client
 
         //trap
-        if(!$officeModel->validate($data)){ //if not true false, meaning may error return response to user
-                $response= array(
-                    'status'=>'error',
-                    'message'=>$officeModel->errors()
-                );
+        if (!$officeModel->validate($data)) { //if not true false, meaning may error return response to user
+            $response = array(
+                'status' => 'error',
+                'message' => $officeModel->errors()
+            );
 
-                return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response);
-                //return agad if may error
+            return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response);
+            //return agad if may error
 
         }
         $officeModel->insert($data);
-        $response= array(
-            'status'=>'success',
-            'message'=>'Office created successfully'
+        $response = array(
+            'status' => 'success',
+            'message' => 'Office created successfully'
         );
 
         return $this->response->setStatusCode(Response::HTTP_CREATED)->setJSON($response);
@@ -100,26 +146,26 @@ class OfficeController extends ResourceController
      */
     public function update($id = null)
     {
-         
-        $officeModel= new \App\Models\Office();
-        $data=$this->request->getJSON();// in preparation para sa ui
 
-       $datafind= $officeModel->find($id);
-        
-        if(!$officeModel->validate($data) || !$datafind){ //if not true false, meaning may error return response to user
-                $response= array(
-                    'status'=>'error',
-                    'message'=>$officeModel->errors()
-                );
+        $officeModel = new \App\Models\Office();
+        $data = $this->request->getJSON(); // in preparation para sa ui
 
-                return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response);
-                //return agad if may error
+        $datafind = $officeModel->find($id);
+
+        if (!$officeModel->validate($data) || !$datafind) { //if not true false, meaning may error return response to user
+            $response = array(
+                'status' => 'error',
+                'message' => $officeModel->errors()
+            );
+
+            return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response);
+            //return agad if may error
 
         }
         $officeModel->update($id, $data); // parameter is id and data
-        $response= array(
-            'status'=>'success',
-            'message'=>'Office updated successfully'
+        $response = array(
+            'status' => 'success',
+            'message' => 'Office updated successfully'
         );
 
         return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response); // RESPONSE 200
@@ -134,25 +180,23 @@ class OfficeController extends ResourceController
      */
     public function delete($id = null)
     {
-        $officeModel= new \App\Models\Office();
-        $data=$officeModel->find($id);
+        $officeModel = new \App\Models\Office();
+        $data = $officeModel->find($id);
 
         //trap
-        if($data){ 
-           $officeModel->delete($id);//delete if exist
-            $response= array(
-                    'status'=>'success',
-                    'message'=>'Office deleted successfully'
-                );
+        if ($data) {
+            $officeModel->delete($id); //delete if exist
+            $response = array(
+                'status' => 'success',
+                'message' => 'Office deleted successfully'
+            );
 
-                return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response);
-
-
+            return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response);
         }
-        
-        $response= array(
-            'status'=>'error',
-            'message'=>'Record Not found'
+
+        $response = array(
+            'status' => 'error',
+            'message' => 'Record Not found'
         );
 
         return $this->response->setStatusCode(Response::HTTP_BAD_REQUEST)->setJSON($response); // RESPONSE 200
