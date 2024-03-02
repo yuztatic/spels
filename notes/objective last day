@@ -1,0 +1,133 @@
+designing the page
+
+go to admin lte
+
+inspect elements
+right click then copy element
+
+header
+section content
+div container fluid
+
+gawa ng row saka ilagay mga column
+
+sa bootstrap
+
+one row 12 column
+
+copy table source from admin lte
+
+change id to dataTable
+
+gawa ng javascript for data table
+
+
+<?= $this->endSection(); ?>
+
+<?= $this->section('pagescript'); ?>
+<?= $this->endSection(); ?>
+
+
+ilalagay ang pagescript sa labas ng contentarea
+dapat kasi maiload muna lahat ng script before  
+
+
+<?= $this->section('pagescript'); ?>
+<script>
+    let table = $('#dataTable').DataTable({
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        paging: true,
+        lengthChange: true,
+        lengthMenu: [5, 10, 20, 50],
+        searching: true,
+        ordering: true,
+        ajax: {
+            url: "<?= base_url('offices/list'); ?>",
+            type: "POST" //post po na verb hindi po get
+        },
+        columns: [{
+            data: "id",
+        }, {
+            data: "code",
+        },{
+            data: "name",
+        },{
+            data: "email",
+        },{
+            data: "",
+                defaultContent:`
+                <td>
+                <button type="button" class="btn btn-primary btn-sm btn-edit" id="editBtn" >Edit</button>
+                <button type="button" class="btn btn-danger btn-sm btn-delete" id="deleteBtn" >Delete</button>
+                </td>
+                `
+        }
+    
+    
+    
+    
+        ]
+
+    });
+</script>
+<?= $this->endSection(); ?>
+
+
+
+
+
+//////////////////////////////////////////////////
+gawa na tayo ng route para sa datatable. post yung method nya kasi may pinapasa tayong data galing sa datatable
+$routes->post('offices/list','OfficeController::list');
+$routes->get('tickets/list','TicketController::list');
+
+
+
+public function list()
+    {
+        $officeModel = new \App\Models\Office();
+        $postData = $this->request->getPost();
+
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length'];
+        $searchValue = $postData['search']['value'];
+        $sortby = $postData['order'][0]['column'];
+        $sortdirection = $postData['order'][0]['dir'];
+        $sortcolumn = $postData['columns'][$sortby]['data'];
+
+        $totalRecords = $officeModel->select('id')->countAllResults();
+        $totalRecordsWithFilter = $officeModel->select('id')->like('code', $searchValue)
+            ->orlike('name', $searchValue)->orlike('email', $searchValue)
+            ->orderBY($sortcolumn, $sortdirection)->countAllResults();
+
+        //fetch records
+        $records = $officeModel->select('*')->like('code', $searchValue)
+            ->orlike('name', $searchValue)->orlike('email', $searchValue)
+            ->orderBY($sortcolumn, $sortdirection)->findAll($rowperpage, $start);
+
+        //map data na ibabalik sa table
+        $data = array();
+
+        foreach ($records as $record) {
+            $data[] = array(
+                "id" => $record['id'],
+                "code" => $record['code'],
+                "name" => $record['name'],
+                "email" => $record['email']
+
+            );
+        }
+
+        $response=array( 
+                    "draw"=>intval($draw),
+                    "recordsTotal"=>$totalRecords,
+                    "recordsFiltered"=>$totalRecordsWithFilter,
+                    "data"=>$data 
+        );
+
+           return $this->response->setStatusCode(Response::HTTP_OK)->setJSON($response); 
+
+    }
